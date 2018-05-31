@@ -16,6 +16,16 @@ body {
   min-height: 250px;
   height: 50vh;
   background-position: center 40%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  font-size: 2rem;
+  text-align: center;
+  color: #fff;
+  text-shadow: 2px 2px #333;
 }
 
 .flickity-page-dots {
@@ -23,13 +33,13 @@ body {
 }
 
 .btn {
-  background-color: transparent;
   width: 140px;
   height: 50px;
 }
 
 .btn-restart {
-  color: #fff;
+  color: #333;
+  background-color: rgba(255, 255, 255, 0.6);
   position: absolute;
   top: 20px;
   right: 20px;
@@ -41,7 +51,7 @@ body {
 
 .btn-restart:hover {
   border-color: #2ecc71;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: white;
 }
 
 .progress-bar {
