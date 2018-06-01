@@ -3,14 +3,12 @@ var flkty = new Flickity( elem, {
   // options
   cellAlign: 'left',
   contain: true,
-  hash: true
+  hash: true,
+  pageDots: false
 });
 
 // element argument can be a selector string
-//   for an individual element
-var flkty = new Flickity( '.main-carousel', {
-  // options
-});
+
 // button restart
 var btnRestart = document.querySelector('.btn-restart');
 btnRestart.addEventListener('click', function(){

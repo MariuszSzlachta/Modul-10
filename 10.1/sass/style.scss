@@ -12,6 +12,7 @@ body {
 }
 
 .carousel-cell {
+  background-size: cover;
   width: 100%;
   min-height: 250px;
   height: 50vh;
@@ -23,9 +24,6 @@ body {
   text-align: center;
   color: #fff;
   text-shadow: 2px 2px #333;
-}
-.flickity-page-dots {
-  display: none;
 }
 
 .btn {
