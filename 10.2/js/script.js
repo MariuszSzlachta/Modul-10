@@ -1,5 +1,5 @@
 var templateSlide = document.getElementById('template-carousel').innerHTML;
-var carouselCells = document.querySelectorAll('.container');
+var carousel = document.querySelector('.main-carousel');
 
 Mustache.parse(templateSlide);
 
@@ -8,8 +8,8 @@ var items = [];
 for (var i = 0; i < data.length; i++) {
   items.push(Mustache.render(templateSlide, data[i]));
 }
-for (i =0; i < carouselCells.length; i++){
-  carouselCells[i].innerHTML = items[i];
+for (i =0; i < carousel.length; i++){
+  carousel[i].innerHTML = items[i];
 }
 // flickity
 var elem = document.querySelector('.main-carousel');
