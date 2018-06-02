@@ -11,8 +11,6 @@ for (var i = 0; i < data.length; i++) {
 for (i =0; i < carouselCells.length; i++){
   carouselCells[i].innerHTML = items[i];
 }
-
-
 // flickity
 var elem = document.querySelector('.main-carousel');
 var flkty = new Flickity(elem, {
