@@ -7,9 +7,7 @@ var items = [];
 
 for (var i = 0; i < data.length; i++) {
   items.push(Mustache.render(templateSlide, data[i]));
-}
-for (i =0; i < carousel.length; i++){
-  carousel[i].innerHTML = items[i];
+    carousel.innerHTML += items[i];
 }
 // flickity
 var elem = document.querySelector('.main-carousel');
