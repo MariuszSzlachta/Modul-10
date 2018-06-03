@@ -2,13 +2,13 @@ var templateSlide = document.getElementById('template-carousel').innerHTML;
 var carousel = document.querySelector('.main-carousel');
 
 Mustache.parse(templateSlide);
-
-var items = [];
+var renderedTemplates = '';
 
 for (var i = 0; i < data.length; i++) {
-  items.push(Mustache.render(templateSlide, data[i]));
-    carousel.innerHTML += items[i];
+  renderedTemplates += Mustache.render(templateSlide, data[i]);
 }
+carousel.innerHTML = renderedTemplates;
+
 // flickity
 var elem = document.querySelector('.main-carousel');
 var flkty = new Flickity(elem, {
