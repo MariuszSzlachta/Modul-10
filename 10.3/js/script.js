@@ -1,60 +1,84 @@
-
-
-window.initMap = function() {
-
- 
-  var map = new google.maps.Map(document.getElementById('map'),
-  {
+// maps
+window.initMap = function () {
+  var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 7,
     center: slides[0].coords
   });
   var markers = [];
   // add markers
-  for (i = 0; i < slides.length; i++){
-      markers[i] = new google.maps.Marker({
+  for (i = 0; i < slides.length; i++) {
+    markers[i] = new google.maps.Marker({
       position: slides[i].coords,
       map: map
     });
   }
 }
+// mustache
+
+var templateSlide = document.getElementById('template-carousel').innerHTML;
+var carousel = document.querySelector('.main-carousel');
+
+Mustache.parse(templateSlide);
+var renderedTemplates = '';
+
+for (var i = 0; i < data.length; i++) {
+  renderedTemplates += Mustache.render(templateSlide, data[i]);
+}
+carousel.innerHTML = renderedTemplates;
+
 
 // flickity
 var elem = document.querySelector('.main-carousel');
-var flkty = new Flickity( elem, {
+var flkty = new Flickity(elem, {
   // options
   cellAlign: 'left',
-  contain: true
+  contain: true,
+  hash: true,
+  pageDots: false
 });
 
-flkty();
+// flkty();
 
+// button restart
+var btnRestart = document.querySelector('.btn-restart');
+btnRestart.addEventListener('click', function () {
+  flkty.select(0);
+});
+
+// scroll
+var progressBar = document.querySelector('.progress-bar');
+
+flkty.on('scroll', function (progress) {
+  progress = Math.max(0, Math.min(1, progress));
+  progressBar.style.width = progress * 100 + '%';
+});
 
 // przesówanie zooma do kolejnego zadania
 
-var smoothPanAndZoom = function(map, zoom, coords){
+var smoothPanAndZoom = function (map, zoom, coords) {
   // Trochę obliczeń, aby wyliczyć odpowiedni zoom do którego ma oddalić się mapa na początku animacji.
   var jumpZoom = zoom - Math.abs(map.getZoom() - zoom);
-  jumpZoom = Math.min(jumpZoom, zoom -1);
+  jumpZoom = Math.min(jumpZoom, zoom - 1);
   jumpZoom = Math.max(jumpZoom, 3);
 
   // Zaczynamy od oddalenia mapy do wyliczonego powiększenia. 
-  smoothZoom(map, jumpZoom, function(){
+  smoothZoom(map, jumpZoom, function () {
     // Następnie przesuwamy mapę do żądanych współrzędnych.
-    smoothPan(map, coords, function(){
+    smoothPan(map, coords, function () {
       // Na końcu powiększamy mapę do żądanego powiększenia. 
-      smoothZoom(map, zoom); 
+      smoothZoom(map, zoom);
     });
   });
 };
 
-var smoothZoom = function(map, zoom, callback) {
+var smoothZoom = function (map, zoom, callback) {
   var startingZoom = map.getZoom();
   var steps = Math.abs(startingZoom - zoom);
-  
+
   // Jeśli steps == 0, czyli startingZoom == zoom
-  if(!steps) {
+  if (!steps) {
     // Jeśli podano trzeci argument
-    if(callback) {
+    if (callback) {
       // Wywołaj funkcję podaną jako trzeci argument.
       callback();
     }
@@ -63,17 +87,17 @@ var smoothZoom = function(map, zoom, callback) {
   }
 
   // Trochę matematyki, dzięki której otrzymamy -1 lub 1, w zależności od tego czy startingZoom jest mniejszy od zoom
-  var stepChange = - (startingZoom - zoom) / steps;
+  var stepChange = -(startingZoom - zoom) / steps;
 
   var i = 0;
   // Wywołujemy setInterval, który będzie wykonywał funkcję co X milisekund (X podany jako drugi argument, w naszym przypadku 80)
-  var timer = window.setInterval(function(){
+  var timer = window.setInterval(function () {
     // Jeśli wykonano odpowiednią liczbę kroków
-    if(++i >= steps) {
+    if (++i >= steps) {
       // Wyczyść timer, czyli przestań wykonywać funkcję podaną w powyższm setInterval
       window.clearInterval(timer);
       // Jeśli podano trzeci argument
-      if(callback) {
+      if (callback) {
         // Wykonaj funkcję podaną jako trzeci argument
         callback();
       }
@@ -84,21 +108,25 @@ var smoothZoom = function(map, zoom, callback) {
 };
 
 // Poniższa funkcja działa bardzo podobnie do smoothZoom. Spróbuj samodzielnie ją przeanalizować. 
-var smoothPan = function(map, coords, callback) {
+var smoothPan = function (map, coords, callback) {
   var mapCenter = map.getCenter();
   coords = new google.maps.LatLng(coords);
 
   var steps = 12;
-  var panStep = {lat: (coords.lat() - mapCenter.lat()) / steps, lng: (coords.lng() - mapCenter.lng()) / steps};
+  var panStep = {
+    lat: (coords.lat() - mapCenter.lat()) / steps,
+    lng: (coords.lng() - mapCenter.lng()) / steps
+  };
 
   var i = 0;
-  var timer = window.setInterval(function(){
-    if(++i >= steps) {
+  var timer = window.setInterval(function () {
+    if (++i >= steps) {
       window.clearInterval(timer);
-      if(callback) callback();
+      if (callback) callback();
     }
-    map.panTo({lat: mapCenter.lat() + panStep.lat * i, lng: mapCenter.lng() + panStep.lng * i});
-  }, 1000/30);
-}; 
-
-
+    map.panTo({
+      lat: mapCenter.lat() + panStep.lat * i,
+      lng: mapCenter.lng() + panStep.lng * i
+    });
+  }, 1000 / 30);
+};
