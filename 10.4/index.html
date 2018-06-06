@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="vendor/normalize.css">
+  <link rel="stylesheet" href="vendor/flickity.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Gmaps api</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="main-carousel"></div>
+
+    <div class="progress-bar"></div>
+    <button class="btn btn-restart">Restart</button>
+
+    <div id="map"></div>
+  </div>
+
+  <script id="template-carousel" type="x-tmpl-mustache">
+    <div class="carousel-cell" style="background-image: url({{image}})">
+      <div class="container">
+        <h2>{{title}}</h2>
+        {{{description}}}
+      </div>
+    </div>
+  </script>
+
+  <script>
+    var data = [{
+        title: 'First title',
+        description: '<p>First description</p>',
+        image: 'https://images.pexels.com/photos/172491/pexels-photo-172491.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        coords: {
+          lat: 51.25052702419269,
+          lng: 22.57244110107422
+        }
+      },
+      {
+        title: 'Second title',
+        description: '<p>Second description</p>',
+        image: 'https://images.pexels.com/photos/145683/pexels-photo-145683.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        coords: {
+          lat: 51.2656496,
+          lng: 22.516649099999995
+
+        }
+      },
+      {
+        title: 'Third title',
+        description: '<p>Third description</p>',
+        image: 'https://images.pexels.com/photos/269676/pexels-photo-269676.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        coords: {
+          lat: 51.19186461310638,
+          lng: 22.540555000305176
+        }
+      }
+    ];
+  </script>
+
+  <script src="vendor/flickity.pkgd.min.js"></script>
+  <script src="vendor/hash.js"></script>
+  <script src="vendor/mustache.js"></script>
+  <script src="js/script.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxh2X1fRifIDq5BfrCIZwBGdXgnxDAexs&callback=initMap"></script>
+</body>
+
+</html>
